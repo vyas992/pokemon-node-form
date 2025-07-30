@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Serve main page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "Pokemon.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Handle form submission

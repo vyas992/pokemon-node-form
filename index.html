@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <title>Pokemon Infromationidia</title>
+  
+  
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #222;
+      transition: background-color 0.3s, color 0.3s;
+      min-height: 100vh;
+      padding-top: 60px;
+    }
+
+    /* Dark Mode */
+    body.dark-mode {
+      background-color: #121212;
+      color: #ddd;
+      background-image: none;
+    }
+
+    /* Loader (Optional) */
+    #loader {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      z-index: 9999;
+    }
+    #loader.dark {
+      background: #121212;
+      color: #ddd;
+    }
+    
+
+    /* Navbar */
+/* Navbar */
+nav {
+  background: rgba(255 255 255 / 0.3);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 1000;
+  transition: background 0.3s;
+
+  /* 🎨 Background Image */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+nav.sticky {
+  background: rgba(255 255 255 / 0.8);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav.dark-mode {
+  background: rgba(18 18 18 / 0.8);
+}
+
+nav img {
+  height: 40px;
+  width: auto; /* Keeps aspect ratio */
+  object-fit: contain;
+  display: block;
+  margin-right: 1rem;
+  background: white;
+  border-radius: 8px; /* Optional: for a smooth rounded look */
+  padding: 4px;       /* Optional: inner space for cleanliness */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  transition: transform 0.3s ease;
+}
+
+nav img:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+   align-items: center;
+   margin: 0;
+   padding: 0;
+}
+
+nav ul li a {
+  color: #222;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+    font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+nav.sticky ul li a,
+nav.dark-mode ul li a {
+  color: #444;
+}
+
+nav.dark-mode.sticky ul li a {
+  color: #ddd;
+}
+
+nav ul li a:hover {
+  color: #070808;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+    /* Hamburger menu for mobile */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger span {
+      background: #222;
+      height: 3px;
+      width: 25px;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Show hamburger on small */
+    @media(max-width: 768px) {
+      nav ul {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        background: rgba(255 255 255 / 0.9);
+        width: 200px;
+        height: calc(100vh - 60px);
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        transition: right 0.3s ease;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+      }
+      nav.dark-mode ul {
+        background: rgba(18 18 18 / 0.95);
+      }
+      nav ul.show {
+        right: 0;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* Hero Section */
+    #Home {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: rgba(255 255 255 / 0.5);
+      margin-bottom: 2rem;
+      border-radius: 10px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Sections */
+    section {
+      max-width: 900px;
+      margin: 1rem auto 2rem auto;
+      padding: 1rem;
+      background: rgba(255 255 255 / 0.7);
+      border-radius: 10px;
+    }
+    body.dark-mode section {
+      background: rgba(30 30 30 / 0.7);
+    }
+    section h2 {
+      margin-bottom: 1rem;
+      color: #007bff;
+    }
+    section article {
+      margin-bottom: 1.5rem;
+    }
+    section article h3 {
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    body.dark-mode section article h3 {
+      color: #ccc;
+    }
+
+    /* Form Styling */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    label {
+      font-weight: 600;
+    }
+    input, textarea {
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+      resize: vertical;
+    }
+    input:focus, textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    body.dark-mode input, body.dark-mode textarea {
+      background: #222;
+      color: #ddd;
+      border-color: #555;
+    }
+    button {
+      padding: 0.7rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+
+    /* Errors and Success */
+    .error {
+      color: red;
+      font-size: 0.9rem;
+    }
+    .success-msg {
+      color: green;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(255 255 255 / 0.3);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+      border-top: 1px solid #ccc;
+    }
+    body.dark-mode footer {
+      background: rgba(18 18 18 / 0.8);
+      border-color: #444;
+    }
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+   .social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.social-icons a {
+  font-size: 26px;
+  color: #555;
+  background: #fff;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+}
+
+/* Individual Hover Colors */
+.social-icons a[aria-label="Facebook"]:hover { color: #1877F2; }
+.social-icons a[aria-label="Twitter"]:hover { color: #1DA1F2; }
+.social-icons a[aria-label="LinkedIn"]:hover { color: #0A66C2; }
+.social-icons a[aria-label="YouTube"]:hover { color: #FF0000; }
+.social-icons a[aria-label="Instagram"]:hover { color: #E1306C; }
+.social-icons a[aria-label="Pinterest"]:hover { color: #BD081C; }
+.social-icons a[aria-label="WhatsApp"]:hover { color: #25D366; }
+.social-icons a[aria-label="Telegram"]:hover { color: #0088cc; }
+.social-icons a[aria-label="GitHub"]:hover { color: #333; }
+.social-icons a[aria-label="Spotify"]:hover { color: #1DB954; }
+.social-icons a[aria-label="TikTok"]:hover { color: #000000; }
+    .newsletter {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .newsletter input[type="email"] {
+      width: 200px;
+    }
+
+   #scroll-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: #007bff;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+#scroll-toggle:hover {
+  transform: scale(1.1);
+  background-color: #0056b3;
+}
+
+    /* Dark Mode Toggle Button */
+    #dark-mode-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #222;
+      color: #ddd;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 700;
+      z-index: 1000;
+      transition: background-color 0.3s;
+    }
+    #dark-mode-toggle:hover {
+      background: #555;
+    }
+
+    table.pokemon-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 120px auto; /* Push below nav + center it */
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  table.pokemon-table thead {
+    background-color: #ffcb05;
+  }
+
+  table.pokemon-table th,
+  table.pokemon-table td {
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+  }
+
+  table.pokemon-table th {
+    font-size: 1.1rem;
+    color: #2c2c2c;
+  }
+
+  table.pokemon-table td {
+    vertical-align: middle;
+  }
+
+  table.pokemon-table tbody tr:hover {
+    background-color: #f7f7f7;
+  }
+
+  table.pokemon-table img {
+    height: 80px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+    button.action {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #3b4cca;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      
+    #google_translate_element {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 6px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    font-size: 14px;
+  }
+
+  @media(max-width: 768px) {
+    #google_translate_element {
+      top: auto;
+      bottom: 20px;
+      right: 10px;
+      font-size: 12px;
+      padding: 4px 10px;
+    }
+  }
+  body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f9f9f9;
+}
+
+header, footer {
+  background-color: #ffcc00;
+  text-align: center;
+  padding: 10px;
+}
+
+main {
+  padding: 20px;
+}
+
+form {
+  background: #fff;
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+  </style>
+  
+ 
+</head>
+<body>
+ 
+  <!-- Loader -->
+  <div id="loader">लोड हो रहा है...</div>
+
+  
+
+  <!-- Navbar -->
+  <nav role="navigation" aria-label="Primary navigation">
+    
+    <ul id="nav-links">
+      <li><a href="#home" tabindex="0" target="_blank">Home</a></li>
+      <li><a href="#Series" tabindex="0" target="_blank">Series</a></li>
+      <li><a href="#link" tabindex="0" target="_blank">link</a></li>
+      <li><a href="#Contact" tabindex="0" target="_blank">Contact</a></li>
+    </ul>
+
+  
+    <div class="hamburger" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    
+  </nav>
+
+  <!-- Back to Top -->
+  <button id="scroll-toggle" aria-label="Scroll Toggle Button">
+  <i class="fas fa-arrow-down"></i>
+</button>
+  <!-- Dark Mode Toggle -->
+  <button id="dark-mode-toggle" aria-pressed="false" aria-label="Toggle dark mode">डार्क मोड</button>
+
+  <!-- Home Section -->
+<section id="home" tabindex="0" aria-label="Home section">
+  <h1>The Pokémon Informationedia</h1>
+  <p>
+    The Pokémon animated series, a global phenomenon, began in Japan on April 1, 1997, with the first season, "Pokémon: Indigo League" according to Bulbapedia. 
+    It quickly gained international popularity, debuting in the United States in September 1998. The series follows the adventures of Ash Ketchum and his partner Pikachu, 
+    alongside a cast of characters, as they travel and battle, capturing new Pokémon and encountering various challenges. 
+    The anime is part of a broader Pokémon media franchise, which includes video games, trading cards, and films.
+  </p>
+</section>
+
+  <!-- Services Section -->
+  <section id="Series" tabindex="0" aria-label="Series section">
+    
+ <div>
+<table class="pokemon-table" border="1">
+ <h2>💥 Pokémon सीरीज: सीज़न 1 से 26 की पूरी जानकारी (मुख्य पात्र + विवरण)</h2>
+
+
+  <thead>
+    <tr>
+      <th>सीज़न</th>
+      <th>वर्ष</th>
+      <th>मुख्य पात्र</th>
+      <th>विवरण</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Indigo League</td>
+      <td>1997–1999</td>
+      <td>Ash, Pikachu, Misty, Brock</td>
+      <td>Ash Ketchum Pallet Town से Pokémon मास्टर बनने का सपना लेकर निकलता है। उसे Pikachu मिलता है, Misty और Brock उसके साथ यात्रा करते हैं। वह Kanto Region के 8 जिम बैज इकट्ठा करता है।</td>
+    </tr>
+    <tr>
+      <td>Adventures in the Orange Islands</td>
+      <td>1999</td>
+      <td>Ash, Pikachu, Misty, Tracey</td>
+      <td>Orange Archipelago में Ash को Orange League में हिस्सा लेना होता है। Brock की जगह Tracey टीम में आता है और Ash अंत में Drake को हराकर Champion बनता है।</td>
+    </tr>
+    <tr>
+      <td>The Johto Journeys</td>
+      <td>1999–2000</td>
+      <td>Ash, Pikachu, Misty, Brock</td>
+      <td>Ash Johto Region में नई Pokémon की खोज करता है और जिम बैज जीतता है। उसके Pokémon में Chikorita, Cyndaquil, Totodile शामिल होते हैं।</td>
+    </tr>
+    <tr>
+      <td>Johto League Champions</td>
+      <td>2000–2001</td>
+      <td>Ash, Pikachu, Misty, Brock</td>
+      <td>Ash और अधिक जिम बैज जीतता है और अपने Pokémon को ट्रेन करता है। Team Rocket अभी भी पीछा कर रही है।</td>
+    </tr>
+    <tr>
+      <td>Master Quest</td>
+      <td>2001–2002</td>
+      <td>Ash, Pikachu, Misty, Brock</td>
+      <td>Ash सभी Johto जिम बैज इकट्ठा करता है और Johto League में भाग लेता है, जहाँ उसका मुकाबला Gary से होता है।</td>
+    </tr>
+    <tr>
+      <td>Advanced</td>
+      <td>2002–2003</td>
+      <td>Ash, Pikachu, May, Max, Brock</td>
+      <td>Hoenn Region में Ash की यात्रा शुरू होती है। May और Max उसकी नई साथी बनते हैं। May Pokémon Coordinator बनना चाहती है।</td>
+    </tr>
+    <tr>
+      <td>Advanced Challenge</td>
+      <td>2003–2004</td>
+      <td>Ash, May, Max, Brock</td>
+      <td>Ash Hoenn में जिम बैज जीतता है और May Pokémon Contest में हिस्सा लेती है। Team Aqua और Team Magma का खतरा होता है।</td>
+    </tr>
+    <tr>
+      <td>Advanced Battle</td>
+      <td>2004–2005</td>
+      <td>Ash, May, Max, Brock</td>
+      <td>Ash Battle Frontier की ओर बढ़ता है और Frontier Brains से मुकाबला करता है। May Grand Festival के लिए तैयारी करती है।</td>
+    </tr>
+    <tr>
+      <td>Battle Frontier</td>
+      <td>2005–2006</td>
+      <td>Ash, May, Max, Brock</td>
+      <td>Ash Battle Frontier को पूरा करता है और सभी प्रतीक (symbols) जीतता है। वह अपने पुराने Pokémon को भी वापस लाता है।</td>
+    </tr>
+     <tr>
+      <td>Battle Dimension</td>
+      <td>2007–2008</td>
+      <td>Ash, Dawn, Brock</td>
+      <td>Ash Gym बैज के लिए यात्रा करता है, जबकि Dawn Pokémon Contests में हिस्सा लेती है। Paul एक मजबूत प्रतिद्वंद्वी बनता है और Team Galactic का खतरा उभरता है।</td>
+    </tr>
+    <tr>
+      <td>Galactic Battles</td>
+      <td>2008–2009</td>
+      <td>Ash, Dawn, Brock</td>
+      <td>Ash और उसकी टीम Team Galactic के खतरे को रोकने की कोशिश करते हैं। Dawn Grand Festival की तैयारी में व्यस्त रहती है।</td>
+    </tr>
+    <tr>
+      <td>Sinnoh League Victors</td>
+      <td>2009–2010</td>
+      <td>Ash, Dawn, Brock</td>
+      <td>Ash Sinnoh League में Paul के खिलाफ एक निर्णायक लड़ाई करता है। Dawn Grand Festival में हिस्सा लेती है और टीम की यात्रा समाप्त होती है।</td>
+    </tr>
+    <tr>
+      <td>Black & White</td>
+      <td>2010–2011</td>
+      <td>Ash, Iris, Cilan</td>
+      <td>Ash Unova Region में प्रवेश करता है। वहाँ वह Iris और Cilan से मिलता है और नए Pokémon के साथ जिम बैज के लिए चुनौती शुरू करता है।</td>
+    </tr>
+    <tr>
+      <td>Rival Destinies</td>
+      <td>2011–2012</td>
+      <td>Ash, Iris, Cilan</td>
+      <td>Ash अपनी यात्रा जारी रखता है और Trip जैसे प्रतिद्वंद्वियों का सामना करता है। World Tournament Junior Cup जैसे नए इवेंट्स में भाग लेता है।</td>
+    </tr>
+    <tr>
+      <td>Adventures in Unova and Beyond</td>
+      <td>2012–2013</td>
+      <td>Ash, Iris, Cilan</td>
+      <td>Ash Unova League में मुकाबला करता है और फिर Decolore Islands की यात्रा करता है। Pallet Town वापस लौटने से पहले नई जगहों को एक्सप्लोर करता है।</td>
+    </tr>
+    <tr>
+      <td>XY</td>
+      <td>2013–2014</td>
+      <td>Ash, Serena, Clemont, Bonnie</td>
+      <td>Ash Kalos Region में आता है जहाँ Serena उसके पुराने दोस्त के रूप में मिलती है। Serena Pokémon Performer बनना चाहती है। Clemont Gym Leader और Bonnie उसकी बहन होती है।</td>
+    </tr>
+    <tr>
+      <td>XY Kalos Quest</td>
+      <td>2014–2015</td>
+      <td>Ash, Serena, Clemont, Bonnie</td>
+      <td>Serena Pokémon Showcase में हिस्सा लेती है। Ash Gym बैज के साथ Kalos League की ओर बढ़ता है और Team Flare की साजिश शुरू होती है।</td>
+    </tr>
+    <tr>
+      <td>XYZ</td>
+      <td>2015–2016</td>
+      <td>Ash, Serena, Clemont, Bonnie</td>
+      <td>Ash Kalos League में शानदार प्रदर्शन करता है। Greninja का नया रूप आता है और टीम Flare के खिलाफ निर्णायक लड़ाई होती है।</td>
+    </tr>
+    <tr>
+      <td>Sun & Moon</td>
+      <td>2016–2017</td>
+      <td>Ash, Pikachu, Lillie, Kiawe, Mallow, Lana, Sophocles</td>
+      <td>Ash Alola Region में Pokémon School में पढ़ाई करता है और नई शिक्षा-आधारित प्रणाली का हिस्सा बनता है। वहाँ वह नए दोस्तों और Pokémon के साथ adventures करता है।</td>
+    </tr>
+    <tr>
+      <td>Sun & Moon: Ultra Adventures</td>
+      <td>2017–2018</td>
+      <td>Ash, Pikachu, Lillie, Kiawe, Mallow, Lana, Sophocles</td>
+      <td>Ash और उसके दोस्त Ultra Beasts से जुड़ी घटनाओं का सामना करते हैं और Ultra Guardians टीम का हिस्सा बनते हैं।</td>
+    </tr>
+    <tr>
+      <td>Sun & Moon: Ultra Legends</td>
+      <td>2018–2019</td>
+      <td>Same as above</td>
+      <td>Ash Alola League की पहली Pokémon League में हिस्सा लेता है और Champion बनता है। यह Ash की पहली official जीत होती है।</td>
+    </tr>
+    <tr>
+      <td>Journeys</td>
+      <td>2019–2020</td>
+      <td>Ash, Goh</td>
+      <td>Ash और Goh Professor Cerise के लैब से दुनिया भर की Pokémon की खोज में निकलते हैं। Goh का लक्ष्य है Mew को पकड़ना।</td>
+    </tr>
+    <tr>
+      <td>Master Journeys</td>
+      <td>2020–2021</td>
+      <td>Ash, Goh, Chloe</td>
+      <td>Ash World Coronation Series में ऊपर चढ़ता है, Goh Project Mew में शामिल होता है, और Chloe Eevee की यात्रा शुरू करती है।</td>
+    </tr>
+    <tr>
+      <td>Ultimate Journeys</td>
+      <td>2021–2022</td>
+      <td>Ash, Goh, Chloe</td>
+      <td>Ash पूरी दुनिया के चैंपियनों से मुकाबला करता है और Leon को हराकर Pokémon World Champion बनता है।</td>
+    </tr>
+    <tr>
+      <td>Horizons: The Series</td>
+      <td>2023–2024</td>
+      <td>Liko, Roy</td>
+      <td>Liko और Roy नए हीरो हैं जो रहस्यमयी pendant और Ancient Poké Balls की खोज में निकलते हैं। यह Ash की यात्रा के बाद की नई शुरुआत है।</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+  
+   
+  </section>
+ <!-- About Section -->
+  <section id="link" tabindex="0" aria-label="link section">
+<h2>🌐 Famous Pokémon Websites (In Table Format)</h2>
+
+<table class="pokemon-table">
+  <thead>
+    <tr>
+      <th>Website Name</th>
+      <th>Description</th>
+      <th>Visit Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pokémon Official</td>
+      <td>Main site for games, anime, TCG & news</td>
+      <td><a href="https://www.pokemon.com" target="_blank">pokemon.com</a></td>
+    </tr>
+    <tr>
+      <td>Bulbapedia</td>
+      <td>Pokémon community-driven encyclopedia</td>
+      <td><a href="https://bulbapedia.bulbagarden.net" target="_blank">Bulbapedia</a></td>
+    </tr>
+    <tr>
+      <td>Serebii.net</td>
+      <td>Pokémon news, events, and episode info</td>
+      <td><a href="https://www.serebii.net" target="_blank">Serebii</a></td>
+    </tr>
+    <tr>
+      <td>Pokémon DB</td>
+      <td>Detailed database of all Pokémon & moves</td>
+      <td><a href="https://www.pokemondb.net" target="_blank">Pokémon DB</a></td>
+    </tr>
+    <tr>
+      <td>Smogon</td>
+      <td>Competitive battle strategies & tiers</td>
+      <td><a href="https://www.smogon.com" target="_blank">Smogon</a></td>
+    </tr>
+    <tr>
+      <td>Pokémon Center</td>
+      <td>Official Pokémon merchandise store</td>
+      <td><a href="https://www.pokemoncenter.com" target="_blank">Pokémon Center</a></td>
+    </tr>
+    <tr>
+      <td>PokéClicker</td>
+      <td>Fan-made idle clicker Pokémon browser game</td>
+      <td><a href="https://www.pokeclicker.com" target="_blank">PokéClicker</a></td>
+    </tr>
+    <tr>
+      <td>Reddit /r/pokemon</td>
+      <td>Pokémon fan community discussions & memes</td>
+      <td><a href="https://www.reddit.com/r/pokemon/" target="_blank">Reddit</a></td>
+    </tr>
+    <tr>
+      <td>Pokémon YouTube</td>
+      <td>Official trailers, episodes, and events</td>
+      <td><a href="https://www.youtube.com/user/pokemon" target="_blank">YouTube Channel</a></td>
+    </tr>
+  </tbody>
+</table>
+  </section>
+ <!-- Contact Section -->
+  <section id="Contact" tabindex="0" aria-label="Contact section">
+    <h2>Contact</h2>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+  <div class="social-icons" aria-label="Social media links">
+  <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+  <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+  <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+  <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="https://pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+  <a href="https://wa.me/919999999999" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://t.me/yourchannel" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+  <a href="https://github.com/yourprofile" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+  <a href="https://open.spotify.com/" target="_blank" rel="noopener" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
+  <a href="https://www.tiktok.com/@yourhandle" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+</div>
+   
+  <p><small>
+    Pokémon और सम्बंधित ट्रेडमार्क Nintendo/Creatures Inc./GAME FREAK के हैं।
+    यह एक अनऑफिशियल फैन साइट है; किसी आधिकारिक इकाई से संबद्ध नहीं।
+  </small></p>
+
+<script>
+  // Loader hide after page load
+  window.addEventListener("load", () => {
+    document.getElementById("loader").style.display = "none";
+  });
+
+  // Hamburger toggle
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.getElementById("nav-links");
+
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    if(navLinks.classList.contains("show")){
+      navLinks.classList.remove("show");
+      hamburger.setAttribute("aria-expanded", "false");
+    } else {
+      navLinks.classList.add("show");
+      hamburger.setAttribute("aria-expanded", "true");
+    }
+  });
+
+ const scrollToggleBtn = document.getElementById("scroll-toggle");
+const icon = scrollToggleBtn.querySelector("i");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    icon.classList.remove("fa-arrow-down");
+    icon.classList.add("fa-arrow-up");
+  } else {
+    icon.classList.remove("fa-arrow-up");
+    icon.classList.add("fa-arrow-down");
+  }
+});
+
+scrollToggleBtn.addEventListener("click", () => {
+  if (window.scrollY > 300) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }
+});
+
+  // Dark mode toggle
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
+  darkModeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    darkModeToggle.setAttribute("aria-pressed", document.body.classList.contains("dark-mode"));
+  });
+
+  // Sticky Navbar on scroll
+  window.addEventListener("scroll", () => {
+    const nav = document.querySelector("nav");
+    if(window.scrollY > 20){
+      nav.classList.add("sticky");
+    } else {
+      nav.classList.remove("sticky");
+    }
+  });
+
+</script>
+ <div id="google_translate_element"></div>
+  <script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'hi',
+      includedLanguages: 'en,hi,gu,pa,ta,te,ur,bn,ml,mr,kn',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+ <section id="Contact">
+      <h2>📬 संपर्क करें</h2>
+      <form method="POST" action="/submit">
+        <label for="name">नाम:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">ईमेल:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">संदेश:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+
+        <button type="submit">भेजें</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>यह वेबसाइट Pokémon कंपनी से संबद्ध नहीं है।</p>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
